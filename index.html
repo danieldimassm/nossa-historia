@@ -39,6 +39,7 @@
             font-size: 20px;
             animation: float 5s infinite ease-in;
             opacity: 0;
+            z-index: 1;
         }
 
         @keyframes float {
@@ -64,101 +65,114 @@
             text-align: justify;
             white-space: pre-line;
         }
-        .texto-declaracao h3 { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--cor-principal); text-align: center; margin-top: 0; }
+        .texto-declaracao h3 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--cor-principal); text-align: center; margin-top: 0; }
 
-        /* Linha do Tempo Horizontal com Linha Conectora */
-        .timeline-wrapper {
+        /* Linha do Tempo Horizontal Arrastável */
+        .timeline-container {
             position: relative;
-            display: flex;
-            overflow-x: auto;
-            padding: 40px 10px;
-            gap: 30px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+            margin: 40px 0;
         }
 
-        /* A linha rosa que passa atrás */
-        .timeline-wrapper::before {
+        .timeline-wrapper {
+            display: flex;
+            overflow-x: auto;
+            padding: 40px 20px;
+            gap: 40px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            position: relative;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+        /* A linha conectora rosa */
+        .timeline-wrapper::after {
             content: "";
             position: absolute;
             top: 50%;
             left: 0;
-            width: 1500px; /* Ajuste conforme o número de cards */
             height: 4px;
             background: var(--cor-principal);
+            width: 2500px; /* Largura grande para cobrir todos os cards */
             z-index: 0;
             transform: translateY(-50%);
         }
 
         .timeline-card {
-            min-width: 280px;
+            min-width: 300px;
             background: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
             position: relative;
-            z-index: 1;
+            z-index: 2;
             scroll-snap-align: center;
             border: 2px solid var(--cor-principal);
             text-align: left;
         }
 
-        .timeline-card h4 { color: var(--cor-principal); margin: 0 0 10px 0; font-size: 1.1rem; }
-        .timeline-card p { font-size: 0.9rem; margin: 0; }
+        .timeline-card h4 { color: var(--cor-principal); margin: 0 0 10px 0; font-size: 1.2rem; border-bottom: 1px solid var(--cor-fundo); padding-bottom: 5px; }
+        .timeline-card p { font-size: 0.95rem; margin: 0; line-height: 1.5; }
 
-        .texto-transicao {
-            min-width: 400px;
+        .card-texto-extra {
+            min-width: 450px;
             background: var(--cor-principal);
             color: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-style: italic;
-            z-index: 1;
+            z-index: 2;
             scroll-snap-align: center;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            font-size: 1.1rem;
         }
 
         /* 200 Motivos */
         .motivos-container {
-            height: 400px;
+            height: 500px;
             overflow-y: scroll;
             background: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             text-align: left;
             border-left: 8px solid var(--cor-principal);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
+        .motivo-item { margin-bottom: 15px; border-bottom: 1px dotted #ffccd5; padding-bottom: 8px; }
+        .motivo-num { color: var(--cor-principal); font-weight: bold; margin-right: 10px; }
 
         /* Galeria */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
-        .gallery img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; cursor: pointer; }
+        .gallery img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .gallery img:hover { transform: scale(1.03); }
         
         #modal {
-            display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); justify-content: center; align-items: center;
         }
         #modal img { max-width: 90%; max-height: 90%; border-radius: 10px; }
 
         /* Timer */
-        #timer-section { background-color: var(--cor-principal); color: white; padding: 50px 20px; }
-        .timer-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .time-unit { text-align: center; min-width: 60px; }
-        .time-unit span { display: block; font-size: 1.8rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; }
+        #timer-section { background-color: var(--cor-principal); color: white; padding: 60px 20px; margin-top: 50px; }
+        .timer-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .time-unit { text-align: center; min-width: 80px; }
+        .time-unit span { display: block; font-size: 2.5rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; margin-bottom: 5px;}
 
-        footer { padding: 20px; text-align: center; opacity: 0.6; font-size: 0.8rem; }
+        footer { padding: 40px; text-align: center; opacity: 0.7; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <header id="header">
         <h1>Para Alice, com Amor</h1>
-        <p>Arraste a nossa história para o lado ❤️</p>
+        <p style="z-index: 2; color: var(--cor-principal); font-weight: 600;">Arraste a nossa história para o lado ❤️</p>
     </header>
 
     <div id="modal" onclick="this.style.display='none'"><img id="modal-img" src=""></div>
@@ -169,20 +183,30 @@
         <div class="texto-declaracao">
             <h3>Você é a minha melhor escolha</h3>
             Amorrr… às vezes eu paro no meio do dia e fico pensando em como minha vida mudou depois que você entrou nela. Não foi uma mudança barulhenta, não foi algo que aconteceu de uma vez só. Foi uma transformação silenciosa, constante, profunda. Você foi chegando devagar e, quando eu percebi, já tinha tomado um espaço enorme dentro de mim. E hoje eu não consigo imaginar meus dias sem você.
+
             Eu amo nossos momentos juntos. Amo nossas conversas que começam bobas e ficam profundas. Amo quando você ri de algo simples. Amo quando você me conta do seu dia. Amo quando a gente fica em silêncio e mesmo assim parece que tá tudo completo. Pra mim, esses momentos são as melhores coisas do mundo. Não é exagero. Eu trocaria qualquer coisa por mais tempo com você.
+
             Se às vezes eu não demonstro tudo do jeito certo, me perdoa. Meu amor é muito maior do que eu consigo expressar. Eu ainda tô aprendendo a amar melhor, a cuidar melhor, a ser mais claro, mais presente. Mas uma coisa nunca muda: minha intenção é sempre te fazer bem. Por você eu mudo. Por você eu cresço. Por você eu me torno um homem melhor todos os dias.
+
             Se eu pudesse, eu ficaria 24 horas por dia do seu lado. Acordaria com você, dormiria com você, dividiria cada segundo da vida. E eu sei que essa fase vai chegar. Eu consigo imaginar nosso casamento. Consigo imaginar você de branco, consigo imaginar eu olhando pra você e pensando: “valeu a pena cada passo até aqui”. Nosso casamento vai ser algo incrível porque não vai ser só uma festa, vai ser a confirmação de uma escolha que a gente faz todos os dias.
+
             Eu te amo não só pelo que você é, mas pelo que eu me torno quando estou com você. Você me dá vontade de construir, de permanecer, de cuidar.
+
             Eu escolho você. Hoje. Amanhã. Sempre.
         </div>
 
         <div class="texto-declaracao">
             <h3>Gratidão, promessa e eternidade</h3>
             Amor, eu sou profundamente grato a Deus por você. E não é frase bonita, é verdade. Você foi presente. Foi cuidado. Foi resposta num momento que talvez eu nem soubesse que estava pedindo algo melhor.
+
             Você é diferente. Seu jeito é diferente. Sua forma de amar é diferente. Você não é só alguém que está comigo, você é alguém que soma, que constrói, que fortalece. Você é paz. Você é apoio. Você é luz.
+
             Eu prometo cuidar de você pra sempre. Não importa o que aconteça. Não importa os problemas, as dificuldades, as fases difíceis. Eu vou estar do seu lado. SEMPRE. Sempre mesmo. Não é promessa feita no calor do momento, é decisão consciente.
+
             Eu sei que relacionamentos passam por desafios. Eu sei que nem todos os dias são perfeitos. Mas eu também sei que quando duas pessoas escolhem ficar, escolhem amar e escolhem lutar uma pela outra, nada é mais forte que isso. E eu escolho você.
+
             Se um dia você duvidar do seu valor, lembra que existe alguém aqui que te admira profundamente. Que vê sua essência. Que enxerga sua força, sua delicadeza, sua beleza interna e externa.
+
             Você foi a melhor coisa do meu ano. E eu não abriria mão de você por nada.
             Eu te amo com calma, com intensidade, com verdade.
         </div>
@@ -190,54 +214,65 @@
         <div class="texto-declaracao">
             <h3>Amor profundo e futuro construído</h3>
             Amor… você se tornou minha paz. No meio de tudo que eu já vivi, de erros, aprendizados, confusões internas, você foi o ponto de equilíbrio. Você trouxe estabilidade pro meu coração.
+
             Eu amo o jeito que você me faz sentir. Com você eu não preciso fingir ser mais forte do que sou. Não preciso esconder minhas inseguranças. Você me aceita, me acolhe, me entende. E isso é raro. Muito raro.
+
             Eu imagino nosso futuro com frequência. Imagino nossa casa. Imagino nossas conquistas. Imagino até nossas dificuldades sendo resolvidas juntos. Imagino a gente envelhecendo lado a lado, olhando pra trás e dizendo: “a gente fez dar certo”.
+
             Eu quero viver todos os natais com você. Quero viver todos os anos novos com você. Quero dividir cada fase da vida com você. Quero que, quando o mundo parecer pesado, você lembre que tem alguém que segura sua mão e não solta.
+
             Eu te amo de um jeito que não é impulso, não é carência, não é ilusão. É escolha diária. É compromisso emocional. É querer ficar.
+
             E não importa o que aconteça, eu vou estar com você. Sempre. Sempre. Sempre.
             Eu te amo, minha Alice.
         </div>
 
         <div class="texto-declaracao">
             <h3>Eu amo a sua risada</h3>
-            Eu amo a sua risada. E eu falo isso quase chorando porque sua risada mexe comigo de um jeito absurdo. Quando você ri de verdade, quando você solta aquela gargalhada que não dá pra segurar, parece que meu coração expande. Parece que o mundo para só pra eu ouvir você. Eu poderia passar horas só ouvindo você rir e ainda assim não seria o suficiente.
-            Eu amo tudo em você. Tudo. Seu jeito de falar, seu jeito de pensar, seu jeito de sentir as coisas. Eu amo quando você fica empolgada contando algo e fala rápido. Amo quando você fica tímida. Amo quando você fica brava e depois faz aquela carinha que me desmonta.
-            Eu amo a sua essência. Amo o coração que você tem. Amo a pessoa que você é quando ninguém tá olhando. Amo sua força, amo sua delicadeza, amo até suas inseguranças porque elas mostram o quanto você é humana, real, verdadeira.
-            E às vezes eu fico emocionado porque eu tenho medo de não demonstrar o suficiente. Medo de não conseguir mostrar o tamanho do que eu sinto. Porque é grande, Alice. É muito grande. Eu te amo num nível que me assusta às vezes. Num nível que me faz querer ser melhor, crescer, amadurecer, proteger, cuidar.
-            Eu queria que você conseguisse entrar dentro de mim por cinco minutos só pra sentir a intensidade disso tudo. Eu amo você. Amo sua risada. Amo seu sorriso. Amo seu abraço. Amo seu jeito inteiro.
-            Você é uma das coisas mais preciosas que já aconteceram na minha vida.
+            Eu amo a sua risada. Eu amo aquele som específico que só você tem. Amo quando você ri de algo simples. Amo quando você tenta se controlar e não consegue. Amo quando sua risada vem acompanhada daquele brilho no olho. Eu amo porque sua risada é você sendo você, sem filtro, sem defesa, só alegria pura.
+
+            Mas eu não amo só isso. Eu amo cada detalhe seu. Amo o jeito que você se importa. Amo como você sente tudo intensamente. Amo como você se entrega. Amo até quando você acha que não tá sendo suficiente, porque mesmo nesses momentos você continua sendo incrível.
+
+            Eu amo o seu jeito de existir. Amo a sua presença. Amo a forma como você mudou meu coração sem perceber. Antes de você, eu não sabia que dava pra sentir algo tão profundo assim. Com você, eu aprendi que amor não é só falar “eu te amo”, é sentir no peito, é quase doer de tão forte.
+
+            Eu quero cuidar de você. Quero proteger seu sorriso. Quero ser o motivo da sua paz. Quero ser o lugar onde você se sente segura. Eu quero ser constante na sua vida.
+
+            Eu amo você inteira, Alice. Amo sua risada, amo seu coração, amo sua alma.
+            E se você algum dia duvidar disso, lembra que tem alguém aqui escrevendo quase chorando porque ama você mais do que consegue explicar. 🤍
         </div>
     </section>
 
     <section>
         <h2>Nossa Linha do Tempo</h2>
-        <div class="timeline-wrapper">
-            <div class="timeline-card">
-                <h4>13 de Junho de 2025</h4>
-                <p>Nossa primeira ligação. Eu tava muito nervoso, nem prestei atenção no filme, fiquei quase a ligação toda com vontade de ir no banheiro kkkk. Te amo!</p>
-            </div>
-            <div class="timeline-card">
-                <h4>18 de Junho de 2025</h4>
-                <p>Primeira vez que nos chamamos de amor. Escutar você falando eu te amo pela primeira vez foi mágico.</p>
-            </div>
-            <div class="timeline-card">
-                <h4>23 de Junho de 2025</h4>
-                <p>Começo da nossa oração. Foram as 2 semanas mais difíceis, fiquei doido pra te mandar mensagem, mas valeu a pena por nós dois.</p>
-            </div>
-            <div class="timeline-card">
-                <h4>13 de Julho de 2025</h4>
-                <p>Nosso primeiro beijo. Tava morrendo de nervosismo, mas depois de tantas tentativas deu certo kkkk.</p>
-            </div>
-            <div class="timeline-card">
-                <h4>18 de Julho de 2025</h4>
-                <p>Nosso primeiro encontro. O filme da F1 foi muito bom e a primeira vez que comi Subway também kkk.</p>
-            </div>
-            <div class="texto-transicao">
-                "Meu amor por você cresceu mais e mais. Eu a amo como nunca amei ninguém. Meus dias com você são mais alegres, estou vivendo mais por você. Obrigado por tudo, amor."
-            </div>
-            <div class="timeline-card">
-                <h4>19 de Dezembro de 2025</h4>
-                <p>Nosso dia. Nossa história. O marco oficial do nosso amor.</p>
+        <div class="timeline-container">
+            <div class="timeline-wrapper">
+                <div class="timeline-card">
+                    <h4>13 de Junho de 2025</h4>
+                    <p>Nossa primeira ligação. Eu confesso que tava muito nervoso, nem prestei atenção nos primeiros minutos do filme, fiquei quase a ligação toda com vontade de ir no banheiro nem sei pq kkkkk. Eu te amo!</p>
+                </div>
+                <div class="timeline-card">
+                    <h4>18 de Junho de 2025</h4>
+                    <p>Primeira vez que nos chamamos de amor. Nunca vou esquecer essa ligação, foi muito boa de vdd escutar você falando eu te amo e dizer eu te amo de volta foi mágico.</p>
+                </div>
+                <div class="timeline-card">
+                    <h4>23 de Junho de 2025</h4>
+                    <p>Começo da nossa oração. Foram as 2 semanas mais difíceis, fiquei doido pra te mandar mensagem e te ouvir, mas por nós dois valeu a pena.</p>
+                </div>
+                <div class="timeline-card">
+                    <h4>13 de Julho de 2025</h4>
+                    <p>Nosso primeiro beijo. Admitindo aqui: tava morrendo de nervosismo e doido pq estava do seu lado, mas depois de tantas tentativas deu certo kkkk.</p>
+                </div>
+                <div class="timeline-card">
+                    <h4>18 de Julho de 2025</h4>
+                    <p>Nosso primeiro encontro. O filme da Fórmula 1 foi muuuuuito bom e a primeira vez que comi Subway foi beeeem bom kkkk.</p>
+                </div>
+                <div class="card-texto-extra">
+                    "E conforme as coisas foram acontecendo meu amor por vc cresceu mais e mais e mais eu a amo como nunca amei ninguém, e sempre vou amar é uma promessa, meus dias com vc são mais alegres eu to sorrindo mais, eu estou vivendo mais por você, e a cada dia meu amor só aumenta a mais mais e MAIS muito obrigado por fazer parte da minha vida amor."
+                </div>
+                <div class="timeline-card" style="background: #fff0f3; border-width: 3px;">
+                    <h4>19 de Dezembro de 2025</h4>
+                    <p>Nosso dia, nossa história. O começo oficial do nosso pra sempre.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -267,10 +302,10 @@
         </div>
     </section>
 
-    <footer>Feito com amor para Alice ❤️</footer>
+    <footer>Feito com todo amor do mundo para Alice ❤️</footer>
 
     <script>
-        // Corações flutuantes
+        // Corações flutuantes no header
         const header = document.getElementById('header');
         function createHeart() {
             const heart = document.createElement('div');
@@ -288,14 +323,18 @@
             document.getElementById('modal-img').src = src; 
         }
 
-        // Motivos (Lista automática)
-        const container = document.getElementById("lista-motivos");
-        for(let i=1; i<=200; i++) {
+        // 200 Motivos Reais
+        const motivos = [
+            "Eu amo a Alice pq ela me faz rir.", "Pq o riso dela me traz paz.", "Pq o sorriso dela muda meu dia.", "Pq o olhar dela me desmonta todinho.", "Pq quando ela olha pra mim tudo fica mais calmo.", "Pq ela chegou na hora certa da minha vida.", "Pq com ela eu me sinto em casa.", "Pq ela me entende até quando fico quieto.", "Pq a voz dela me acalma.", "Pq ouvir ela rir é a melhor coisa.", "Pq ela é linda de um jeito unico.", "Pq ela é linda por fora e por dentro.", "Pq ela me inspira a ser melhor.", "Pq ela acredita em mim.", "Pq ela me dá força sem nem perceber.", "Pq ela me faz querer evoluir.", "Pq com ela eu quero crescer.", "Pq ela deixa meus dias mais leve.", "Pq pensar nela já me anima.", "Pq ela me traz alegria de vdd.", "Pq o jeito dela é especial.", "Pq ela é carinhosa.", "Pq ela é verdadeira comigo.", "Pq ela é intensa na medida certa.", "Pq ela se importa comigo.", "Pq ela me escuta.", "Pq ela presta atenção nos detalhe.", "Pq ela lembra das coisa.", "Pq ela me faz sentir importante.", "Pq ela me faz sentir amado.", "Pq ficar com ela é simples.", "Pq amar ela é natural.", "Pq com ela nada pesa.", "Pq ela transforma dias comum em especial.", "Pq ela tem um brilho diferente.", "Pq ela é meu conforto.", "Pq ela é meu sorriso bobo.", "Pq ela é meu pensamento antes de dormir.", "Pq ela é meu primeiro pensamento ao acordar.", "Pq eu gosto de imaginar o futuro com ela.", "Pq ela me dá saudade mesmo perto.", "Pq ela faz falta quando nao ta.", "Pq o cheiro dela me acalma.", "Pq o abraço dela encaixa certinho.", "Pq o toque dela é cuidado.", "Pq ela me faz sentir seguro.", "Pq ela me faz sentir escolhido.", "Pq ela me faz sentir suficiente.", "Pq ela me faz sentir amado de vdd.", "Pq ela me faz sentir vivo.", "Pq ela tem um jeito doce.", "Pq ela tem um jeito forte.", "Pq ela é sensivel.", "Pq ela é intensa.", "Pq ela é sincera.", "Pq ela é ela.", "Pq ela nao finge nada.", "Pq ela é real comigo.", "Pq ela me aceita.", "Pq ela me conhece de verdade.", "Pq com ela eu posso ser eu.", "Pq com ela eu nao preciso fingir força.", "Pq com ela eu posso errar e aprender.", "Pq ela me faz querer melhorar.", "Pq ela me ensina sem tentar.", "Pq ela me faz refletir.", "Pq ela me faz amadurecer.", "Pq ela me ajudou a evoluir.", "Pq nesses 6 meses eu cresci muito com ela.", "Pq ela mudou meu jeito de ver a vida.", "Pq ela faz eu acreditar no amor.", "Pq ela fez eu voltar a sentir.", "Pq ela abriu meu coração.", "Pq ela me trouxe calma.", "Pq ela trouxe cor pra minha vida.", "Pq ela trouxe sentido.", "Pq ela trouxe esperança.", "Pq ela trouxe alegria.", "Pq ela trouxe amor.", "Pq ela ficou.", "Pq ela escolhe ficar.", "Pq ela tenta.", "Pq ela se importa.", "Pq ela se preocupa comigo.", "Pq ela sente tudo de verdade.", "Pq ela vive intensamente.", "Pq ela nao é rasa.", "Pq ela é profunda.", "Pq ela é intensa do jeito certo.", "Pq ela me entende.", "Pq ela me faz rir fácil.", "Pq ela me deixa bobo.", "Pq ela me deixa nervoso de um jeito bom.", "Pq ela me deixa apaixonado.", "Pq ela me deixa com saudade.", "Pq ela me deixa com vontade de abraçar.", "Pq ela me deixa com vontade de cuidar.", "Pq ela me deixa com vontade de proteger.", "Pq ela me deixa com vontade de amar mais.", "Pq ela é a Alice.", "Pq ela é especial.", "Pq ela é unica.", "Pq nao existe outra igual.", "Pq ela é meu lugar seguro.", "Pq ela é meu refugio.", "Pq ela é minha calma no caos.", "Pq ela é minha paz.", "Pq ela é meu sorriso facil.", "Pq ela é minha parte boa.", "Pq ela é meu motivo.", "Pq ela faz eu acreditar em nós.", "Pq ela faz eu querer tentar sempre.", "Pq ela faz eu cuidar do relacionamento.", "Pq ela faz eu querer construir algo bonito.", "Pq ela faz eu querer um futuro.", "Pq ela faz eu querer acordar do lado dela.", "Pq ela faz eu querer dizer bom dia olhando nos olhos.", "Pq ela faz eu querer estar presente.", "Pq ela faz eu querer ser um homem melhor.", "Pq ela merece o melhor de mim.", "Pq ela é incrivel.", "Pq ela é maravilhosa.", "Pq ela é linda em cada detalhe.", "Pq ela é forte.", "Pq ela é doce.", "Pq ela é intensa.", "Pq ela é gentil.", "Pq ela é verdadeira.", "Pq ela é especial pra mim.", "Pq ela é meu amor.", "Pq amar ela é facil.", "Pq amar ela é natural.", "Pq amar ela é leve.", "Pq amar ela é real.", "Pq amar ela é sincero.", "Pq amar ela é verdade.", "Pq amar ela me transforma.", "Pq amar ela me faz crescer.", "Pq amar ela me faz evoluir.", "Pq amar ela me faz feliz.", "Pq ela me trouxe aprendizado.", "Pq ela me trouxe maturidade.", "Pq ela me trouxe carinho.", "Pq ela me trouxe cuidado.", "Pq ela me trouxe amor de vdd.", "Pq ela me trouxe calma.", "Pq ela me trouxe equilibrio.", "Pq ela me trouxe paz.", "Pq ela me trouxe luz.", "Pq ela me trouxe sentido.", "Pq eu sou grato por ela.", "Pq eu agradeço por ela existir.", "Pq eu agradeço por ela ficar.", "Pq eu agradeço por ela me escolher.", "Pq eu agradeço por ela confiar em mim.", "Pq eu agradeço por ela me amar.", "Pq eu agradeço por ela cuidar de mim.", "Pq eu agradeço por ela ser quem é.", "Pq eu agradeço por cada momento.", "Pq eu agradeço por cada sorriso.", "Pq ela faz meus dias melhor.", "Pq ela faz minha vida melhor.", "Pq ela faz tudo ter mais cor.", "Pq ela faz tudo valer a pena.", "Pq ela faz eu querer continuar.", "Pq ela faz eu querer tentar mais.", "Pq ela faz eu querer lutar.", "Pq ela faz eu querer amar.", "Pq ela faz eu querer cuidar.", "Pq ela faz eu querer ficar.", "Pq ela é minha pessoa.", "Pq ela é meu amor.", "Pq ela é minha escolha.", "Pq ela é minha prioridade.", "Pq ela é meu coração.", "Pq ela é meu sorriso.", "Pq ela é minha paz.", "Pq ela é meu lar.", "Pq ela é meu futuro.", "Pq ela é tudo isso e mais.", "Pq sem ela eu nao seria quem sou hoje.", "Pq com ela eu evolui muito.", "Pq com ela eu cresci.", "Pq com ela eu aprendi a amar melhor.", "Pq com ela eu aprendi a cuidar.", "Pq com ela eu aprendi a sentir.", "Pq com ela eu aprendi a ficar.", "Pq com ela eu aprendi a escolher.", "Pq com ela eu aprendi a ser melhor.", "Pq com ela eu aprendi o que é amor de vdd.", "Pq eu amo a Alice.", "Pq eu amo o jeito dela.", "Pq eu amo quem ela é.", "Pq eu amo estar com ela.", "Pq eu amo cuidar dela.", "Pq eu amo fazer ela rir.", "Pq eu amo ver ela feliz.", "Pq eu amo dividir a vida com ela.", "Pq eu amo crescer com ela.", "Pq amar a Alice é a melhor coisa da minha vida."
+        ];
+
+        const motivosList = document.getElementById("lista-motivos");
+        motivos.forEach((motivo, index) => {
             const div = document.createElement("div");
             div.className = "motivo-item";
-            div.innerHTML = `<span style="color:#ff4d6d; font-weight:bold">${i}.</span> Motivo especial que me faz te amar...`;
-            container.appendChild(div);
-        }
+            div.innerHTML = `<span class="motivo-num">${index + 1}.</span> ${motivo}`;
+            motivosList.appendChild(div);
+        });
 
         // Timer
         const startDate = new Date("2025-12-19T20:00:00").getTime();
